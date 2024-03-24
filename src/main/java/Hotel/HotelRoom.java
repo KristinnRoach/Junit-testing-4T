@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public class HotelRoom {
 
-    /* GETTERS AND SETTERS */
+    /* GETTERS */
 
     public String getLocation() {
         return location;
