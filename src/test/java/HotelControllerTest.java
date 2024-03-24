@@ -4,41 +4,31 @@ import org.junit.Test;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
 
 public class HotelControllerTest {
 
     @Test
-    public void testGetSearchResults() {
-        searchInterface mockHotelInterface = mock(searchInterface.class);
-        HotelController hotelController = new HotelController(mockHotelInterface);
-
-        // Test data
-        LocalDate arrival = LocalDate.of(2024, 4, 1);
-        LocalDate departure = LocalDate.of(2024, 4, 7);
-        String location = "New York";
-        Integer maxPrice = 200;
-        HotelRoom[] mockSearchResults = new HotelRoom[2];
-
-        when(mockHotelInterface.searchHotels(eq(location), eq(arrival), eq(departure), eq(maxPrice)))
-                .thenReturn(mockSearchResults);
-
-        HotelRoom[] searchResults = hotelController.getSearchResults(location, arrival, departure, maxPrice);
-
-        assertSame(mockSearchResults, searchResults);
-        assertEquals(2, searchResults.length);
-        verify(mockHotelInterface).searchHotels(location, arrival, departure, maxPrice);
-    }
-
-    @Test
-    public void testGetSearchResultsWithIncorrectDates() {
+    public void testGetSearchResultsArrivalBeforeDeparture() {
         searchInterface mock = new Mock();
         HotelController hotelController = new HotelController(mock);
 
         // Test data with incorrect dates (departure before arrival)
         LocalDate arrival = LocalDate.of(2024, 4, 7);
         LocalDate departure = LocalDate.of(2024, 4, 1);
+        String location = "New York";
+        Integer maxPrice = 3333;
+
+        assertThrows(IllegalArgumentException.class, () -> hotelController.getSearchResults(location, arrival, departure, maxPrice));
+    }
+
+    @Test
+    public void testGetSearchResultsMissingData() {
+        searchInterface mock = new Mock();
+        HotelController hotelController = new HotelController(mock);
+
+        // Test data with null value for departure
+        LocalDate arrival = LocalDate.of(2024, 4, 7);
+        LocalDate departure = null;
         String location = "New York";
         Integer maxPrice = 3333;
 
@@ -85,7 +75,7 @@ public class HotelControllerTest {
         assertEquals(0, searchResults.length);
     }
     @Test
-    public void testGetSearchResultsWithMockObject() {
+    public void testGetSearchResultsWithValidDataSorting() {
         searchInterface mockHotelInterface = new Mock();
         HotelController hotelController = new HotelController(mockHotelInterface);
 

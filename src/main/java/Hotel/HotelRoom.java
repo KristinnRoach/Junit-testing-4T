@@ -11,49 +11,29 @@ public class HotelRoom {
         return location;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public Integer getPricePerNight() {
         return pricePerNight;
-    }
-
-    public void setPricePerNight(Integer pricePerNight) {
-        this.pricePerNight = pricePerNight;
     }
 
     public String getHotelName() {
         return HotelName;
     }
 
-    public void setHotelName(String hotelName) {
-        HotelName = hotelName;
-    }
-
     public int getNrOfBeds() {
         return nrOfBeds;
-    }
-
-    public void setNrOfBeds(int nrOfBeds) {
-        this.nrOfBeds = nrOfBeds;
     }
 
     public LocalDate[] getAvailableDates() {
         return availableDates;
     }
 
-    public void setAvailableDates(LocalDate[] availableDates) {
-        this.availableDates = availableDates;
-    }
-
     /* FIELDS */
 
-    private String HotelName;
-    private String location;
-    private int nrOfBeds;
-    private Integer pricePerNight;  // Integer (ekki integer) leyfir null values
-    private LocalDate[] availableDates;
+    private final String HotelName;
+    private final String location;
+    private final int nrOfBeds;
+    private final Integer pricePerNight;  // Integer (ekki integer) leyfir null values
+    private final LocalDate[] availableDates;
 
     /* Constructor */
 
